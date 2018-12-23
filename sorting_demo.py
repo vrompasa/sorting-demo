@@ -80,26 +80,31 @@ def ask_sorting():
             print("There's no such option!\n")
 
 if __name__ == "__main__":
-    print("\n--- Sorting Algorithm Demo ---\n")
-    while True:
-        length = ask_length()
-        array = generate_array(length)
-        if not array:
-            continue
-        sorter = ask_sorting()
-        if not sorter:
-            continue
-        break
-    print("")
-    animation = subprocess.Popen("./sorting_animation.sh")
-    start_time = timer()
-    sorter.sort(array)
-    end_time = timer()
-    animation.kill()
-    subprocess.run(["stty", "echo"]) # Show input in terminal
-    subprocess.run(["tput", "cvvis"]) # Make the cursor visible
-    duration = end_time - start_time
-    print(("\rSorting an array size of {:,} using {}"
-           " took {:.3f} seconds\n").format(length,
-                                            sorter.name,
-                                            duration))
+    try:
+        print("\n--- Sorting Algorithm Demo ---\n")
+        while True:
+            length = ask_length()
+            array = generate_array(length)
+            if not array:
+                continue
+            sorter = ask_sorting()
+            if not sorter:
+                continue
+            break
+        print("")
+        animation = subprocess.Popen("./sorting_animation.sh")
+        start_time = timer()
+        sorter.sort(array)
+        end_time = timer()
+        animation.kill()
+        subprocess.run(["stty", "echo"]) # Show input in terminal
+        subprocess.run(["tput", "cvvis"]) # Make the cursor visible
+        duration = end_time - start_time
+        print(("\rSorting an array size of {:,} using {}"
+               " took {:.3f} seconds\n").format(length,
+                                                sorter.name,
+                                                duration))
+    except KeyboardInterrupt:
+        subprocess.run(["stty", "echo"]) # Show input in terminal
+        subprocess.run(["tput", "cvvis"]) # Make the cursor visible
+        print("\nBye!")
