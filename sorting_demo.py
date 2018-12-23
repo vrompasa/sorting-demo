@@ -60,6 +60,7 @@ def ask_sorting():
     print("1 - Insertion Sort")
     print("2 - Merge Sort")
     print("3 - Quicksort")
+    print("4 - Heapsort")
     print("\nYou can type \"back\" to go back to start.")
     print("\nFor lengths >100 000, insertion sort will be extremely inefficient.")
     print("If the sorting starts to take too long, CTRL-C is your friend.\n")
@@ -73,6 +74,8 @@ def ask_sorting():
             return MergeSort()
         elif choice == "3":
             return QuickSort()
+        elif choice == "4":
+            return HeapSort()
         else:
             print("There's no such option!\n")
 
