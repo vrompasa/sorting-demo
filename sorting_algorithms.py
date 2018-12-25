@@ -28,9 +28,9 @@ class MergeSort():
         left = self.sort(array[:middle])
         right = self.sort(array[middle:])
 
-        return self._merge(left, right)
+        return self.__merge(left, right)
 
-    def _merge(self, left, right):
+    def __merge(self, left, right):
         array = []
         # Add infinities to aid comparison
         if left[-1] != math.inf and right[-1] != math.inf:
@@ -78,17 +78,17 @@ class HeapSort():
 
     def sort(self, array):
         heap_size = len(array)
-        self._build_heap(array, heap_size)
+        self.__build_heap(array, heap_size)
         for i in range(heap_size-1, 0, -1):
             array[0], array[i] = array[i], array[0]
             heap_size -= 1
-            self._max_heapify(array, heap_size, 0)
+            self.__max_heapify(array, heap_size, 0)
 
-    def _build_heap(self, array, heap_size):
+    def __build_heap(self, array, heap_size):
         for i in range((heap_size//2), -1, -1):
-            self._max_heapify(array, heap_size, i)
+            self.__max_heapify(array, heap_size, i)
 
-    def _max_heapify(self, array, heap_size, i):
+    def __max_heapify(self, array, heap_size, i):
         left = 2 * i + 1
         right = 2 * i + 2
         largest = i
@@ -98,4 +98,4 @@ class HeapSort():
             largest = right
         if largest != i:
             array[i], array[largest] = array[largest], array[i]
-            self._max_heapify(array, heap_size, largest)
+            self.__max_heapify(array, heap_size, largest)
