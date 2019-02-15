@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import random
 import subprocess
@@ -86,9 +88,9 @@ if __name__ == "__main__":
     try:
         print("\n--- Sorting Algorithm Demo ---\n")
         while True:
-            length = ask_length()
-            array = generate_array(length)
-            if not array:
+            array_length = ask_length()
+            array_to_sort = generate_array(array_length)
+            if not array_to_sort:
                 continue
             sorter = ask_sorting()
             if not sorter:
@@ -97,14 +99,14 @@ if __name__ == "__main__":
         print("")
         animation = subprocess.Popen("./sorting_animation.sh")
         start_time = timer()
-        sorter.sort(array)
+        sorter.sort(array_to_sort)
         end_time = timer()
         animation.kill()
         subprocess.run(["stty", "echo"])    # Show input in terminal
         subprocess.run(["tput", "cvvis"])   # Make the cursor visible
         duration = end_time - start_time
         print(("\rSorting an array size of {:,} using {}"
-               " took {:.3f} seconds\n").format(length,
+               " took {:.3f} seconds\n").format(array_length,
                                                 sorter.name,
                                                 duration))
     except KeyboardInterrupt:

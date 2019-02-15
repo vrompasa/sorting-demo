@@ -60,7 +60,7 @@ class QuickSort():
         less = []
         pivot_list = []
         more = []
-        if len(array) == 0:
+        if not array:
             return array
         pivot = statistics.median([array[0], array[len(array) // 2], array[-1]])
         for number in array:
