@@ -2,7 +2,8 @@ import sys
 import random
 import subprocess
 from timeit import default_timer as timer
-from sorting_algorithms import *
+from sorting_algorithms import InsertionSort, MergeSort, QuickSort, HeapSort
+
 
 def ask_length():
     print("Start by giving the length of the array you want to sort.")
@@ -10,7 +11,7 @@ def ask_length():
     print("Spaces or commas can be used as thousands separators.")
     print("\nType \"quit\" to exit the program.\n")
     while True:
-        length = input("Length: ").replace(" ","").replace(",","")
+        length = input("Length: ").replace(" ", "").replace(",", "")
         if length == "quit":
             print("Bye!")
             sys.exit()
@@ -28,10 +29,12 @@ def ask_length():
                 continue
             return length
 
+
 def ask_array():
     numbers = input("Give the to be sorted numbers separated by a comma: ")
     array = numbers.split(",")
-    return list(map(int, array)) # Convert the string values to ints
+    return list(map(int, array))    # Convert the string values to ints
+
 
 def generate_array(length):
     print("\nIn which order do you want the array to be?\n")
@@ -43,17 +46,17 @@ def generate_array(length):
         choice = input("Enter the number of your choice: ")
         if choice == "back":
             return None
-        elif choice == "1":
+        if choice == "1":
             print("\nGenerating the array...", end='')
             return [x for x in range(length)]
-        elif choice == "2":
+        if choice == "2":
             print("\nGenerating the array...", end='')
             return [length - x for x in range(length)]
-        elif choice == "3":
+        if choice == "3":
             print("\nGenerating the array...", end='')
             return [random.randint(1, 1000) for i in range(length)]
-        else:
-            print("There's no such option!\n")
+        print("There's no such option!\n")
+
 
 def ask_sorting():
     print("\rChoose which sorting algorithm to use:\n")
@@ -68,16 +71,16 @@ def ask_sorting():
         choice = input("Enter the number of your choice: ")
         if choice == "back":
             return None
-        elif choice == "1":
+        if choice == "1":
             return InsertionSort()
-        elif choice == "2":
+        if choice == "2":
             return MergeSort()
-        elif choice == "3":
+        if choice == "3":
             return QuickSort()
-        elif choice == "4":
+        if choice == "4":
             return HeapSort()
-        else:
-            print("There's no such option!\n")
+        print("There's no such option!\n")
+
 
 if __name__ == "__main__":
     try:
@@ -97,14 +100,14 @@ if __name__ == "__main__":
         sorter.sort(array)
         end_time = timer()
         animation.kill()
-        subprocess.run(["stty", "echo"]) # Show input in terminal
-        subprocess.run(["tput", "cvvis"]) # Make the cursor visible
+        subprocess.run(["stty", "echo"])    # Show input in terminal
+        subprocess.run(["tput", "cvvis"])   # Make the cursor visible
         duration = end_time - start_time
         print(("\rSorting an array size of {:,} using {}"
                " took {:.3f} seconds\n").format(length,
                                                 sorter.name,
                                                 duration))
     except KeyboardInterrupt:
-        subprocess.run(["stty", "echo"]) # Show input in terminal
-        subprocess.run(["tput", "cvvis"]) # Make the cursor visible
+        subprocess.run(["stty", "echo"])    # Show input in terminal
+        subprocess.run(["tput", "cvvis"])   # Make the cursor visible
         print("\nBye!")

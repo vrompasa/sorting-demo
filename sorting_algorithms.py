@@ -1,6 +1,7 @@
 import math
 import statistics
 
+
 class InsertionSort():
     def __init__(self):
         self.name = "insertion sort"
@@ -15,6 +16,7 @@ class InsertionSort():
             array[j + 1] = key
 
         return array
+
 
 class MergeSort():
     def __init__(self):
@@ -38,7 +40,7 @@ class MergeSort():
             right.append(math.inf)
         i = 0
         j = 0
-        for k in range(len(left) - 1 + len(right) - 1):
+        for _ in range(len(left) - 1 + len(right) - 1):
             if left[i] <= right[j]:
                 array.append(left[i])
                 if i < len(left) - 1:
@@ -49,28 +51,29 @@ class MergeSort():
                     j += 1
         return array
 
+
 class QuickSort():
     def __init__(self):
         self.name = "quicksort"
 
     def sort(self, array):
         less = []
-        pivotList = []
+        pivot_list = []
         more = []
         if len(array) == 0:
             return array
-        else:
-            pivot = statistics.median([array[0], array[len(array) // 2], array[-1]])
-            for number in array:
-                if number < pivot:
-                    less.append(number)
-                elif number > pivot:
-                    more.append(number)
-                else:
-                    pivotList.append(number)
-            less = self.sort(less)
-            more = self.sort(more)
-        return less + pivotList + more
+        pivot = statistics.median([array[0], array[len(array) // 2], array[-1]])
+        for number in array:
+            if number < pivot:
+                less.append(number)
+            elif number > pivot:
+                more.append(number)
+            else:
+                pivot_list.append(number)
+        less = self.sort(less)
+        more = self.sort(more)
+        return less + pivot_list + more
+
 
 class HeapSort():
     def __init__(self):
