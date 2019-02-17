@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+The purpose of this program is to demonstrate the runtimes of different
+sorting algorithms.
+"""
 
 import sys
 import random
@@ -8,6 +12,10 @@ from sorting_algorithms import InsertionSort, MergeSort, QuickSort, HeapSort
 
 
 def ask_length():
+    """
+    Asks the user a number between 1 and 10 million
+    and returns the answer
+    """
     print("Start by giving the length of the array you want to sort.")
     print("You can choose any number between 1 and 10,000,000.")
     print("Spaces or commas can be used as thousands separators.")
@@ -32,13 +40,8 @@ def ask_length():
             return length
 
 
-def ask_array():
-    numbers = input("Give the to be sorted numbers separated by a comma: ")
-    array = numbers.split(",")
-    return list(map(int, array))    # Convert the string values to ints
-
-
 def generate_array(length):
+    """Generates and returns an array based on the chosen order."""
     print("\nIn which order do you want the array to be?\n")
     print("1 - Ascending order")
     print("2 - Descending order")
@@ -61,13 +64,18 @@ def generate_array(length):
 
 
 def ask_sorting():
+    """
+    Asks which sorting algorithm to use and returns an instance of the
+    chosen algorithm.
+    """
     print("\rChoose which sorting algorithm to use:\n")
     print("1 - Insertion Sort")
     print("2 - Merge Sort")
     print("3 - Quicksort")
     print("4 - Heapsort")
     print("\nYou can type \"back\" to go back to start.")
-    print("\nFor lengths >100 000, insertion sort will be extremely inefficient.")
+    print("\nFor lengths >100 000, insertion sort will be "
+          "extremely inefficient.")
     print("If the sorting starts to take too long, CTRL-C is your friend.\n")
     while True:
         choice = input("Enter the number of your choice: ")
@@ -84,31 +92,36 @@ def ask_sorting():
         print("There's no such option!\n")
 
 
+def main():
+    """The main function of the program."""
+    print("\n--- Sorting Algorithm Demo ---\n")
+    while True:
+        length = ask_length()
+        array = generate_array(length)
+        if not array:
+            continue
+        sorter = ask_sorting()
+        if not sorter:
+            continue
+        break
+    print("")
+    animation = subprocess.Popen("./sorting_animation.sh")
+    start_time = timer()
+    sorter.sort(array)
+    end_time = timer()
+    animation.kill()
+    subprocess.run(["stty", "echo"])    # Show input in terminal
+    subprocess.run(["tput", "cvvis"])   # Make the cursor visible
+    duration = end_time - start_time
+    print(("\rSorting an array size of {:,} using {}"
+           " took {:.3f} seconds\n").format(length,
+                                            sorter.name,
+                                            duration))
+
+
 if __name__ == "__main__":
     try:
-        print("\n--- Sorting Algorithm Demo ---\n")
-        while True:
-            array_length = ask_length()
-            array_to_sort = generate_array(array_length)
-            if not array_to_sort:
-                continue
-            sorter = ask_sorting()
-            if not sorter:
-                continue
-            break
-        print("")
-        animation = subprocess.Popen("./sorting_animation.sh")
-        start_time = timer()
-        sorter.sort(array_to_sort)
-        end_time = timer()
-        animation.kill()
-        subprocess.run(["stty", "echo"])    # Show input in terminal
-        subprocess.run(["tput", "cvvis"])   # Make the cursor visible
-        duration = end_time - start_time
-        print(("\rSorting an array size of {:,} using {}"
-               " took {:.3f} seconds\n").format(array_length,
-                                                sorter.name,
-                                                duration))
+        main()
     except KeyboardInterrupt:
         subprocess.run(["stty", "echo"])    # Show input in terminal
         subprocess.run(["tput", "cvvis"])   # Make the cursor visible

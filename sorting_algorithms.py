@@ -1,12 +1,19 @@
+"""
+Implementations of a few common sorting algorithms.
+"""
+
 import math
 import statistics
 
 
 class InsertionSort():
+    """Insertion sort sorting algorithm."""
     def __init__(self):
         self.name = "insertion sort"
 
-    def sort(self, array):
+    @staticmethod
+    def sort(array):
+        """Sorts the given array using insertion sort and returns it."""
         for i in range(1, len(array)):
             key = array[i]
             j = i - 1
@@ -19,10 +26,12 @@ class InsertionSort():
 
 
 class MergeSort():
+    """Merge sort sorting algorithm."""
     def __init__(self):
         self.name = "merge sort"
 
     def sort(self, array):
+        """Sorts the given array using merge sort and returns it."""
         if len(array) == 1:
             return array
 
@@ -32,7 +41,8 @@ class MergeSort():
 
         return self.__merge(left, right)
 
-    def __merge(self, left, right):
+    @classmethod
+    def __merge(cls, left, right):
         array = []
         # Add infinities to aid comparison
         if left[-1] != math.inf and right[-1] != math.inf:
@@ -53,16 +63,20 @@ class MergeSort():
 
 
 class QuickSort():
+    """Quick sort sorting algorithm."""
     def __init__(self):
         self.name = "quicksort"
 
     def sort(self, array):
+        """Sorts the given array using quick sort and returns it."""
         less = []
         pivot_list = []
         more = []
         if not array:
             return array
-        pivot = statistics.median([array[0], array[len(array) // 2], array[-1]])
+        pivot = statistics.median([array[0],
+                                   array[len(array) // 2],
+                                   array[-1]])
         for number in array:
             if number < pivot:
                 less.append(number)
@@ -76,16 +90,19 @@ class QuickSort():
 
 
 class HeapSort():
+    """Heap sort sorting algorithm."""
     def __init__(self):
         self.name = "heapsort"
 
     def sort(self, array):
+        """Sorts the given array using heap sort and returns it."""
         heap_size = len(array)
         self.__build_heap(array, heap_size)
         for i in range(heap_size-1, 0, -1):
             array[0], array[i] = array[i], array[0]
             heap_size -= 1
             self.__max_heapify(array, heap_size, 0)
+        return array
 
     def __build_heap(self, array, heap_size):
         for i in range((heap_size//2), -1, -1):
